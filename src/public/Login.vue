@@ -1,23 +1,27 @@
 <template>
   <main class="form-signin">
-    <form>
+    <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
       <div class="form-floating">
         <input
           type="email"
+          v-model="email"
           class="form-control"
           id="floatingInput"
           placeholder="name@example.com"
+          required
         />
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating">
         <input
           type="password"
+          v-model="password"
           class="form-control"
           id="floatingPassword"
           placeholder="Password"
+          required
         />
         <label for="floatingPassword">Password</label>
       </div>
@@ -37,8 +41,34 @@
 
 
 <script>
+import { ref } from "@vue/reactivity";
+import axios from "axios";
+import { useRouter } from "vue-router";
 export default {
   name: "Login",
+
+  setup() {
+    const email = ref("");
+    const password = ref("");
+    const router = useRouter();
+    const submit = async () => {
+      const response = await axios.post("login", {
+        email: email.value,
+        password: password.value,
+      });
+      localStorage.setItem("token", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+      await router.push("/");
+    };
+
+    return {
+      submit,
+      email,
+      password,
+    };
+  },
 };
 </script>
 

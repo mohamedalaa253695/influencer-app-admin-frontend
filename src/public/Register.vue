@@ -1,13 +1,13 @@
 <template>
   <main class="form-signin">
-    <form>
+    <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Please Register</h1>
 
       <div class="form-floating">
         <input
           type="text"
           class="form-control"
-          name="first_name"
+          v-model="firstName"
           id="floatingInput"
           placeholder="Mohamed"
           required
@@ -18,7 +18,7 @@
         <input
           type="text"
           class="form-control"
-          name="last_name"
+          v-model="lastName"
           id="floatingInput"
           placeholder="Alaa"
           required
@@ -29,7 +29,7 @@
         <input
           type="email"
           class="form-control"
-          name="email"
+          v-model="email"
           id="floatingInput"
           placeholder="name@example.com"
           required
@@ -41,7 +41,7 @@
         <input
           type="password"
           class="form-control"
-          name="password"
+          v-model="password"
           id="floatingPassword"
           placeholder="Password"
           required
@@ -52,7 +52,7 @@
         <input
           type="password"
           class="form-control"
-          name="confirm_password"
+          v-model="passwordConfirm"
           id="floatingPassword"
           placeholder="Password"
           required
@@ -69,8 +69,40 @@
 </template>
 
 <script  >
+import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 export default {
   name: "Register",
+  setup() {
+    const firstName = ref("");
+    const lastName = ref("");
+    const email = ref("");
+    const password = ref("");
+    const passwordConfirm = ref("");
+    const router = useRouter();
+
+    const submit = async () => {
+      await axios.post("register", {
+        first_name: firstName.value,
+        last_name: lastName.value,
+        email: email.value,
+        password: password.value,
+        password_confirm: passwordConfirm.value,
+      });
+      // console.log(response);
+      await router.push("/login");
+    };
+
+    return {
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordConfirm,
+      submit,
+    };
+  },
 };
 </script>
 

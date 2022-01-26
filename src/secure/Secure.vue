@@ -5,43 +5,39 @@
       <Menu></Menu>
 
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <h2>Section title</h2>
-        <div class="table-responsive">
-          <table class="table table-striped table-sm">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1,001</td>
-                <td>random</td>
-                <td>data</td>
-                <td>placeholder</td>
-                <td>text</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <router-view />
+        <!-- Dashboard Component -->
       </main>
     </div>
   </div>
 </template>
 
 <script>
+import { onMounted } from "vue";
 import Header from "@/components/Header.vue";
 import Menu from "@/components/Menu.vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
     Menu,
     Header,
   },
+
+  setup() {
+    const router = useRouter();
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("user");
+        console.log(response);
+      } catch (e) {
+        await router.push("/login");
+      }
+    });
+  },
+
   name: "Secure",
 };
 </script>
