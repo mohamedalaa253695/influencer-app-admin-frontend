@@ -6,13 +6,23 @@
     <div class="position-sticky pt-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <router-link to="/" class="nav-link active" aria-current="page">
+          <router-link
+            to="/dashboard"
+            active-class="active"
+            class="nav-link"
+            aria-current="page"
+          >
             <span data-feather="home"></span>
             Dashboard
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/users" class="nav-link active" aria-current="page">
+          <router-link
+            to="/users"
+            active-class="active"
+            class="nav-link"
+            aria-current="page"
+          >
             <span data-feather="users"></span>
             Users
           </router-link>
