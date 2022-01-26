@@ -1,5 +1,10 @@
 <template>
-  <h2>Section title</h2>
+  <div class="d-flex justify-content-between my-3">
+    <h2>Users</h2>
+    <router-link to="/users/create" class="btn btn-primary"
+      >create User</router-link
+    >
+  </div>
   <div class="table-responsive">
     <table class="table table-striped table-sm">
       <thead>
@@ -61,6 +66,8 @@
 // import { onMounted } from "@vue/runtime-core";
 import { ref, onMounted } from "@vue/runtime-core";
 import axios from "axios";
+import { User } from "@/classes/user";
+import { Entity } from "@/interfaces/entity";
 
 export default {
   name: "Users",
@@ -90,7 +97,7 @@ export default {
       if (confirm(`Are you sure you want to delete this record?`)) {
         await axios.delete(`users/${id}`);
         // delete users.value[id];
-        users.value = users.value.filter((u: { id: number }) => u.id !== id);
+        users.value = users.value.filter((e: Entity) => e.id !== id);
       }
     };
     // const edit = async (id:number) =>{
