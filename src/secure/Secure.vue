@@ -1,5 +1,5 @@
 <template>
-  <Header></Header>
+  <Header :user="user"></Header>
   <div class="container-fluid">
     <div class="row">
       <Menu></Menu>
@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
-import Header from "@/components/Header.vue";
-import Menu from "@/components/Menu.vue";
+import { onMounted, ref } from "vue";
+import Header from "@/secure/components/Header.vue";
+import Menu from "@/secure/components/Menu.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
@@ -27,15 +27,20 @@ export default {
 
   setup() {
     const router = useRouter();
+    const user = ref(null);
 
     onMounted(async () => {
       try {
         const response = await axios.get("user");
-        console.log(response);
+        user.value = response.data.data;
       } catch (e) {
         await router.push("/login");
       }
     });
+
+    return {
+      user,
+    };
   },
 
   name: "Secure",

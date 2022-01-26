@@ -7,8 +7,18 @@
     >
 
     <div class="navbar-nav">
-      <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" href="javascript:void(0)" @click="logout"
+      <div class="nav-item text-nowrap d-flex">
+        <div class="text-white">
+          <router-link
+            to="/profile"
+            class="nav-link px-3 text-white border rounded opacity-75"
+            >{{ user?.first_name }} {{ user?.last_name }}</router-link
+          >
+        </div>
+        <a
+          class="nav-link text-white px-3"
+          href="javascript:void(0)"
+          @click="logout"
           >Sign out</a
         >
       </div>
@@ -20,6 +30,7 @@
 import { useRouter } from "vue-router";
 export default {
   name: "Header",
+  props: ["user"],
 
   setup() {
     const router = useRouter();
