@@ -41,7 +41,7 @@
         v-model="roleId"
         aria-label="Default select example"
       >
-        <option value="0">Select Role</option>
+        <option value="0" selected>Select Role</option>
         <option v-for="role in roles" :key="role.id" :value="role.id">
           {{ role.name }}
         </option>
@@ -52,12 +52,13 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default {
-  name: "UsersCreate",
+  name: "UsersEdit",
+
   setup() {
     const firstName = ref("");
     const lastName = ref("");
@@ -65,12 +66,23 @@ export default {
     const roleId = ref(0);
     const roles = ref([]);
     const router = useRouter();
+    const { params } = useRoute();
+
     onMounted(async () => {
       const response = await axios.get("roles");
       roles.value = response.data.data;
+
+      const userCall = await axios.get(`users/${params.id}`);
+      const user = userCall.data.data;
+
+      firstName.value = user.first_name;
+      lastName.value = user.last_name;
+      email.value = user.email;
+      roleId.value = user.role.id;
     });
+
     const submit = async () => {
-      await axios.post("users", {
+      await axios.put(`users/${params.id}`, {
         first_name: firstName.value,
         last_name: lastName.value,
         email: email.value,
@@ -78,6 +90,7 @@ export default {
       });
       await router.push("/users");
     };
+
     return {
       firstName,
       lastName,
@@ -87,6 +100,12 @@ export default {
       submit,
     };
   },
+
+  // data: function () {
+  //   return {
+  //     count: 0,
+  //   };
+  // },
 };
 </script>
 

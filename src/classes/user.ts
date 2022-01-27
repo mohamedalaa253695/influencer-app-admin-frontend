@@ -1,5 +1,5 @@
 import { Entity } from "@/interfaces/entity";
-import { Role } from "./Role";
+import { Role } from "./role";
 
 export class User implements Entity {
     id: number;
