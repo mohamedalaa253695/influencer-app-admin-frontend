@@ -30,7 +30,7 @@ export default {
     };
 
     const next = async () => {
-      if (page.value === props.value) return;
+      if (page.value === props.lastPage) return;
       page.value++;
       emit("page-changed", page.value);
     };

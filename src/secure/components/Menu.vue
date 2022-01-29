@@ -49,6 +49,17 @@
             Products
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link
+            to="/orders"
+            active-class="active"
+            class="nav-link"
+            aria-current="page"
+          >
+            <span data-feather="roles"></span>
+            Orders
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>
@@ -60,5 +71,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
