@@ -1,7 +1,11 @@
 <template>
   <div class="d-flex justify-content-between my-3">
     <h2>Users</h2>
-    <a to="orders/export" href="javascript:void(0)" class="btn btn-primary"
+    <a
+      to="orders/export"
+      href="javascript:void(0)"
+      @click="exportFile"
+      class="btn btn-primary"
       >Export</a
     >
   </div>
@@ -56,10 +60,23 @@ export default {
       lastPage.value = response.data.meta.last_page;
     };
     onMounted(load);
+
+    const exportFile = async () => {
+      const response = await axios.get("orders/export", {
+        responseType: "blob",
+      });
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const downloadUrl = window.URL.createObjectURL(response.data);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "orders.csv";
+      link.click();
+    };
     return {
       orders,
       lastPage,
       load,
+      exportFile,
     };
   },
 };
