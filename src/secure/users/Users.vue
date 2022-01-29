@@ -100,9 +100,6 @@ export default {
         users.value = users.value.filter((e: Entity) => e.id !== id);
       }
     };
-    // const edit = async (id:number) =>{
-    //   const response = await axios.delete(users/)
-    // }
     onMounted(load);
 
     return {

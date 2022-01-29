@@ -38,6 +38,17 @@
             Roles
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link
+            to="/products"
+            active-class="active"
+            class="nav-link"
+            aria-current="page"
+          >
+            <span data-feather="roles"></span>
+            Products
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>
