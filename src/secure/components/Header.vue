@@ -12,8 +12,8 @@
           <router-link
             to="/profile"
             class="nav-link px-3 text-white border rounded opacity-75"
-            >{{ user?.first_name }} {{ user?.last_name }}</router-link
-          >
+            >{{ user.name }}
+          </router-link>
         </div>
         <a
           class="nav-link text-white px-3"
@@ -27,24 +27,27 @@
 </template>
 
 <script>
+import { computed } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import axios from "axios";
 export default {
   name: "Header",
-  props: ["user"],
-
   setup() {
     const router = useRouter();
-    const logout = () => {
-      localStorage.clear();
+    const store = useStore();
+    const user = computed(() => store.state.User.user);
+    const logout = async () => {
+      await axios.post("logout", {});
+
       router.push("/login");
     };
-
     return {
+      user,
       logout,
     };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -46,13 +46,17 @@
 <script>
 import axios from "axios";
 import Paginator from "../components/Paginator.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "Orders",
   components: { Paginator },
   setup() {
     const orders = ref([]);
     const lastPage = ref(0);
+    const store = useStore();
+
+    const AuthenticatedUser = computed(() => store.state.User.user);
 
     const load = async (page = 1) => {
       const response = await axios.get(`orders?page=${page}`);
@@ -77,6 +81,7 @@ export default {
       lastPage,
       load,
       exportFile,
+      AuthenticatedUser,
     };
   },
 };

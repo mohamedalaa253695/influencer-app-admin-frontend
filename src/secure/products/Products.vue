@@ -51,13 +51,14 @@
 
 <script lang="ts">
 // import { onMounted } from "@vue/runtime-core";
-import { ref, onMounted } from "@vue/runtime-core";
+import { ref, onMounted, computed } from "@vue/runtime-core";
 import axios from "axios";
 import { User } from "@/classes/user";
 import { Entity } from "@/interfaces/entity";
 import router from "@/router";
 import { useRouter } from "vue-router";
 import Paginator from "@/secure/components/Paginator.vue";
+import { useStore } from "vuex";
 
 export default {
   name: "Products",
@@ -66,6 +67,9 @@ export default {
     const products = ref([]);
     const lastPage = ref(0);
     const router = useRouter();
+    const store = useStore();
+
+    const AuthenticatedUser = computed(() => store.state.User.user);
 
     const load = async (page = 1) => {
       const response = await axios.get(`products?page=${page}`);
@@ -88,10 +92,10 @@ export default {
       lastPage,
       load,
       del,
+      AuthenticatedUser,
     };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex justify-content-between my-3">
     <h2>Users</h2>
-    <router-link to="/users/create" class="btn btn-primary"
+    <router-link
+      to="/users/create"
+      v-if="AuthenticatedUser.canEdit('users')"
+      class="btn btn-primary"
       >create User</router-link
     >
   </div>
@@ -23,7 +26,10 @@
           <td>{{ user.email }}</td>
           <td>{{ user.role.name }}</td>
           <td>
-            <div class="btn-group mr-2">
+            <div
+              class="btn-group mr-2"
+              v-if="AuthenticatedUser.canEdit('users')"
+            >
               <router-link
                 :to="`/users/${user.id}/edit`"
                 class="btn btn-sm btn-outline-secondary"
@@ -64,10 +70,11 @@
 
 <script lang="ts">
 // import { onMounted } from "@vue/runtime-core";
-import { ref, onMounted } from "@vue/runtime-core";
+import { ref, onMounted, computed } from "@vue/runtime-core";
 import axios from "axios";
 import { User } from "@/classes/user";
 import { Entity } from "@/interfaces/entity";
+import { useStore } from "vuex";
 
 export default {
   name: "Users",
@@ -75,7 +82,9 @@ export default {
     const users = ref([]);
     const page = ref(1);
     const lastPage = ref(0);
+    const store = useStore();
 
+    const AuthenticatedUser = computed(() => store.state.User.user);
     const load = async () => {
       const response = await axios.get(`users?page=${page.value}`);
       users.value = response.data.data;
@@ -104,6 +113,7 @@ export default {
 
     return {
       users,
+      AuthenticatedUser,
       next,
       prev,
       del,
@@ -112,5 +122,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

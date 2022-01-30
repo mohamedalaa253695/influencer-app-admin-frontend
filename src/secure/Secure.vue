@@ -1,23 +1,25 @@
 <template>
-  <Header :user="user"></Header>
+  <Header></Header>
   <div class="container-fluid">
     <div class="row">
       <Menu></Menu>
 
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <router-view />
+        <router-view v-if="user?.id" />
         <!-- Dashboard Component -->
       </main>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { onMounted, ref } from "vue";
 import Header from "@/secure/components/Header.vue";
 import Menu from "@/secure/components/Menu.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { User } from "@/classes/user";
 
 export default {
   components: {
@@ -28,11 +30,24 @@ export default {
   setup() {
     const router = useRouter();
     const user = ref(null);
+    const store = useStore();
 
     onMounted(async () => {
       try {
         const response = await axios.get("user");
-        user.value = response.data.data;
+        const u = response.data.data;
+        await store.dispatch(
+          "User/setUser",
+          new User(
+            u.id,
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.role,
+            u.permission
+          )
+        );
+        user.value = u;
       } catch (e) {
         await router.push("/login");
       }
