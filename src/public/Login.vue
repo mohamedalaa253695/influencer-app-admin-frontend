@@ -39,7 +39,6 @@
   </main>
 </template>
 
-
 <script>
 import { ref } from "@vue/reactivity";
 import axios from "axios";
@@ -55,7 +54,9 @@ export default {
       const response = await axios.post("login", {
         email: email.value,
         password: password.value,
+        scope: "admin",
       });
+
       localStorage.setItem("token", response.data.token);
       axios.defaults.headers.common[
         "Authorization"

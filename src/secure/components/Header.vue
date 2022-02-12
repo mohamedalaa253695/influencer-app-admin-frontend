@@ -30,21 +30,21 @@
 import { computed } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import axios from "axios";
 export default {
   name: "Header",
   setup() {
     const router = useRouter();
-    const store = useStore();
-    const user = computed(() => store.state.User.user);
-    const logout = async () => {
-      await axios.post("logout", {});
+    const sotre = useStore();
 
+    const user = computed(() => sotre.state.User.user);
+    const logout = () => {
+      localStorage.clear();
       router.push("/login");
     };
+
     return {
-      user,
       logout,
+      user,
     };
   },
 };
