@@ -24,7 +24,7 @@ export class User implements Entity {
     }
 
     canView(page: string) {
-        // console.log(this.permissions);
+        console.log(this.permissions.some(p => p === `view_${page}`));
         return this.permissions.some(p => p === `view_${page}`);
     }
 

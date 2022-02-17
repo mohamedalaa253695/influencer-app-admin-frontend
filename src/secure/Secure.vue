@@ -36,6 +36,7 @@ export default {
       try {
         const response = await axios.get("user");
         const u = response.data.data;
+        // console.log(u);
         await store.dispatch(
           "User/setUser",
           new User(
@@ -44,7 +45,7 @@ export default {
             u.last_name,
             u.email,
             u.role,
-            u.permission
+            u.permissions
           )
         );
         user.value = u;
