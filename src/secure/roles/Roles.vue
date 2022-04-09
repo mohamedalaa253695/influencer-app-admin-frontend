@@ -29,14 +29,13 @@
               <router-link
                 :to="`/roles/${role.id}/edit`"
                 class="btn btn-sm btn-outline-secondary"
-                >Edit
-              </router-link>
+                >Edit</router-link
+              >
               <a
                 href="javascript:void(0)"
                 class="btn btn-sm btn-outline-secondary"
                 @click="del(role.id)"
-              >
-                Delete</a
+                >Delete</a
               >
             </div>
           </td>
@@ -82,8 +81,11 @@ export default {
     const AuthenticatedUser = computed(() => store.state.User.user);
 
     const load = async () => {
-      const response = await axios.get(`roles?page=${page.value}`);
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/roles?page=${page.value}`
+      );
       roles.value = response.data.data;
+      console.log(roles.value);
 
       if (response.data.meta !== undefined) {
         lastPage.value = response.data.meta.last_page;
@@ -104,7 +106,7 @@ export default {
 
     const del = async (id: number) => {
       if (confirm("Are you sure you want to delete that role?")) {
-        await axios.delete(`roles/${id}`);
+        await axios.delete(`${process.env.VUE_APP_BASE_URL}/roles/${id}`);
         roles.value = roles.value.filter((e: Entity) => e.id !== id);
       }
     };

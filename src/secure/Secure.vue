@@ -34,7 +34,9 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get("user");
+        const response = await axios.get(
+          `${process.env.VUE_APP_BASE_URL}/user`
+        );
         const u = response.data.data;
         // console.log(u);
         await store.dispatch(

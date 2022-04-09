@@ -68,7 +68,7 @@
   </main>
 </template>
 
-<script  >
+<script>
 import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -83,7 +83,7 @@ export default {
     const router = useRouter();
 
     const submit = async () => {
-      await axios.post("register", {
+      await axios.post(`${process.env.VUE_APP_USERS_URL}/register`, {
         first_name: firstName.value,
         last_name: lastName.value,
         email: email.value,
@@ -105,7 +105,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 html,

@@ -51,9 +51,13 @@ export default {
     const router = useRouter();
     const { params } = useRoute();
     onMounted(async () => {
-      const response = await axios.get("permissions");
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/permissions`
+      );
       permissions.value = response.data.data;
-      const roleCall = await axios.get(`roles/${params.id}`);
+      const roleCall = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/roles/${params.id}`
+      );
       const role: Role = roleCall.data.data;
       name.value = role.name;
       selected.value = role.permissions.map((p) => p.id);
@@ -66,7 +70,7 @@ export default {
       selected.value = selected.value.filter((s) => s !== id);
     };
     const submit = async () => {
-      await axios.put(`roles/${params.id}`, {
+      await axios.put(`${process.env.VUE_APP_BASE_URL}/roles/${params.id}`, {
         name: name.value,
         permissions: selected.value,
       });
@@ -84,5 +88,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

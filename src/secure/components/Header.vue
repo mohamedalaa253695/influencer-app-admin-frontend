@@ -2,9 +2,9 @@
   <header
     class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
   >
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#"
-      >Company name</a
-    >
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#" >
+      <img src="../../assets/images/affliate-logo.png" style="width:150px; hieght:150px;" alt="">
+      </a>
 
     <div class="navbar-nav">
       <div class="nav-item text-nowrap d-flex">

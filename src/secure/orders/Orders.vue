@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-content-between my-3">
-    <h2>Users</h2>
+    <h2>Orders</h2>
     <a
       to="orders/export"
       href="javascript:void(0)"
@@ -59,16 +59,22 @@ export default {
     const AuthenticatedUser = computed(() => store.state.User.user);
 
     const load = async (page = 1) => {
-      const response = await axios.get(`orders?page=${page}`);
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/orders?page=${page}`
+      );
+      console.log(response.data.data);
       orders.value = response.data.data;
       lastPage.value = response.data.meta.last_page;
     };
     onMounted(load);
 
     const exportFile = async () => {
-      const response = await axios.get("orders/export", {
-        responseType: "blob",
-      });
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/export`,
+        {
+          responseType: "blob",
+        }
+      );
       const blob = new Blob([response.data], { type: "text/csv" });
       const downloadUrl = window.URL.createObjectURL(response.data);
       const link = document.createElement("a");

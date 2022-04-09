@@ -1,4 +1,5 @@
 <template>
+<div class="container mt-3">
   <form @submit.prevent="submit">
     <div class="mb-3">
       <label for="firstName" class="form-label">First Name</label>
@@ -50,6 +51,7 @@
 
     <button type="text" class="btn btn-primary">Submit</button>
   </form>
+</div>
 </template>
 
 <script>
@@ -66,11 +68,11 @@ export default {
     const roles = ref([]);
     const router = useRouter();
     onMounted(async () => {
-      const response = await axios.get("roles");
+      const response = await axios.get(`${process.env.VUE_APP_BASE_URL}/roles`);
       roles.value = response.data.data;
     });
     const submit = async () => {
-      await axios.post("users", {
+      await axios.post(`${process.env.VUE_APP_BASE_URL}/users`, {
         first_name: firstName.value,
         last_name: lastName.value,
         email: email.value,

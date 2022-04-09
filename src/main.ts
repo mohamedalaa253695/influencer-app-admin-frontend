@@ -5,7 +5,7 @@ import store from './store'
 import axios from 'axios'
 
 
-axios.defaults.baseURL = 'http://localhost:8080/api/admin';
+// axios.defaults.baseURL = '';
 // axios.defaults.withCredentials = true;
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;

@@ -1,4 +1,5 @@
 <template>
+<div class="container mt-3">
   <form @submit.prevent="submit">
     <div class="form-group">
       <label>Title</label>
@@ -23,8 +24,9 @@
       <label>Price</label>
       <input type="number" class="form-control" name="price" v-model="price" />
     </div>
-    <button class="btn btn-outline-secondary">Save</button>
+    <button class="btn btn-primary mt-3">Save</button>
   </form>
+</div>
 </template>
 
 <script lang="ts">
@@ -44,7 +46,9 @@ export default {
     const router = useRouter();
     const { params } = useRoute();
     onMounted(async () => {
-      const response = await axios.get(`products/${params.id}`);
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/products/${params.id}`
+      );
       const product: Product = response.data.data;
       title.value = product.title;
       description.value = product.description;
@@ -52,7 +56,7 @@ export default {
       price.value = product.price;
     });
     const submit = async () => {
-      await axios.put(`products/${params.id}`, {
+      await axios.put(`${process.env.VUE_APP_BASE_URL}/products/${params.id}`, {
         title: title.value,
         description: description.value,
         image: image.value,

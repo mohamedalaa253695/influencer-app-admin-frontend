@@ -1,4 +1,5 @@
 <template>
+<div class="container mt-3">
   <form @submit.prevent="submit">
     <div class="mb-3">
       <label class="form-label">Title</label>
@@ -14,7 +15,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label">Image</label>
-      <div class="input-group-append">
+      <div class="input-group-append d-flex">
         <input type="text" class="form-control" name="Image" v-model="image" />
         <ImageUpload @file-uploaded="image = $event" />
       </div>
@@ -23,8 +24,9 @@
       <label class="form-label">Price</label>
       <input type="number" class="form-control" name="price" v-model="price" />
     </div>
-    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary ">Save</button>
   </form>
+</div>
 </template>
 
 <script lang="ts">
@@ -42,7 +44,7 @@ export default {
     const price = ref(0);
     const router = useRouter();
     const submit = async () => {
-      await axios.post("products", {
+      await axios.post(`${process.env.VUE_APP_BASE_URL}/products`, {
         title: title.value,
         description: description.value,
         image: image.value,

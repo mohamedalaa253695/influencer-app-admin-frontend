@@ -24,7 +24,7 @@
           </td>
           <td>{{ product.title }}</td>
           <td>{{ product.description }}</td>
-          <td>{{ product.price }}</td>
+          <td class="fs-6">${{ product.price }}</td>
           <td>
             <div class="btn-group mr-2">
               <router-link
@@ -72,7 +72,9 @@ export default {
     const AuthenticatedUser = computed(() => store.state.User.user);
 
     const load = async (page = 1) => {
-      const response = await axios.get(`products?page=${page}`);
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/products?page=${page}`
+      );
       products.value = response.data.data;
 
       lastPage.value = response.data.meta.last_page;
@@ -80,7 +82,7 @@ export default {
 
     const del = async (id: number) => {
       if (confirm("Are you sure you want to delete that product?")) {
-        await axios.delete(`products/${id}`);
+        await axios.delete(`${process.env.VUE_APP_BASE_URL}/products/${id}`);
         products.value = products.value.filter((e: Entity) => e.id !== id);
       }
     };

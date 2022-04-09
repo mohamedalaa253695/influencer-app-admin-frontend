@@ -25,7 +25,7 @@
       <input type="text" class="form-control" name="email" v-model="email" />
     </div>
 
-    <button class="btn btn-outline-secondary">Save</button>
+    <button class="btn btn-primary mt-2">Save</button>
   </form>
 
   <h2 class="mt-4">Change Password</h2>
@@ -50,7 +50,7 @@
       />
     </div>
 
-    <button class="btn btn-outline-secondary">Save</button>
+    <button class="btn btn-primary mt-2">Save</button>
   </form>
 </template>
 
@@ -75,11 +75,14 @@ export default {
       email.value = user.value.email;
     });
     const submitInfo = async () => {
-      const response = await axios.put("users/info", {
-        first_name: firstName.value,
-        last_name: lastName.value,
-        email: email.value,
-      });
+      const response = await axios.put(
+        `${process.env.VUE_APP_BASE_URL}/users/info`,
+        {
+          first_name: firstName.value,
+          last_name: lastName.value,
+          email: email.value,
+        }
+      );
       const u: User = response.data;
       await store.dispatch(
         "User/setUser",
@@ -94,7 +97,7 @@ export default {
       );
     };
     const submitPassword = async () => {
-      await axios.put("users/password", {
+      await axios.put(`${process.env.VUE_APP_BASE_URL}/users/password`, {
         password: password.value,
         password_confirm: passwordConfirm.value,
       });

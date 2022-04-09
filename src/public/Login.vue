@@ -1,5 +1,5 @@
 <template>
-  <main class="form-signin">
+  <main class="form-signin mt-3">
     <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -34,7 +34,6 @@
       <button class="w-100 btn btn-lg btn-primary" type="submit">
         Sign in
       </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
     </form>
   </main>
 </template>
@@ -51,11 +50,14 @@ export default {
     const password = ref("");
     const router = useRouter();
     const submit = async () => {
-      const response = await axios.post("login", {
-        email: email.value,
-        password: password.value,
-        scope: "admin",
-      });
+      const response = await axios.post(
+        `${process.env.VUE_APP_USERS_URL}/login`,
+        {
+          email: email.value,
+          password: password.value,
+          scope: "admin",
+        }
+      );
 
       localStorage.setItem("token", response.data.token);
       axios.defaults.headers.common[

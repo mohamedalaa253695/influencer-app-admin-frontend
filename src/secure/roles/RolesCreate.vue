@@ -51,11 +51,13 @@ export default {
     const selected = ref([] as number[]);
     const router = useRouter();
 
-    axios.post("roles", {
+    axios.post(`${process.env.VUE_APP_BASE_URL}/roles`, {
       name: name.value,
     });
     onMounted(async () => {
-      const response = await axios.get("permissions");
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/permissions`
+      );
       permissions.value = response.data.data;
     });
     const select = (id: number, checked: boolean) => {
@@ -68,7 +70,7 @@ export default {
 
     const submit = async () => {
       //   console.log(selected.value);
-      await axios.post("roles", {
+      await axios.post(`${process.env.VUE_APP_BASE_URL}/roles`, {
         name: name.value,
         permissions: selected.value,
       });
@@ -85,5 +87,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

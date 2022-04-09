@@ -25,13 +25,16 @@ export default {
           x: {
             type: "timeseries",
             tick: {
-              format: "%Y-%m-%d",
+              format: "%Y-%m",
             },
           },
         },
       });
 
-      const response = await axios.get("chart");
+
+      
+
+      const response = await axios.get(`${process.env.VUE_APP_BASE_URL}/chart`);
       const records = response.data.data;
       chart.load({
         columns: [

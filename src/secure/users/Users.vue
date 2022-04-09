@@ -15,7 +15,7 @@
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Role</th>
+          <!-- <th scope="col">Role</th> -->
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
           <td>{{ user.id }}</td>
           <td>{{ user.first_name }} {{ user.last_name }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.role.name }}</td>
+          <!-- <td>{{ user.role.name }}</td> -->
           <td>
             <div
               class="btn-group mr-2"
@@ -86,7 +86,10 @@ export default {
 
     const AuthenticatedUser = computed(() => store.state.User.user);
     const load = async () => {
-      const response = await axios.get(`users?page=${page.value}`);
+      const response = await axios.get(
+        `${process.env.VUE_APP_BASE_URL}/users?page=${page.value}`
+      );
+      console.log(response.data.data);
       users.value = response.data.data;
       lastPage.value = response.data.meta.last_page;
     };
@@ -104,7 +107,7 @@ export default {
 
     const del = async (id: number) => {
       if (confirm(`Are you sure you want to delete this record?`)) {
-        await axios.delete(`users/${id}`);
+        await axios.delete(`${process.env.VUE_APP_BASE_URL}/users/${id}`);
         // delete users.value[id];
         users.value = users.value.filter((e: Entity) => e.id !== id);
       }
